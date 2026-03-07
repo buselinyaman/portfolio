@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Site yönetim paneline hoş geldiniz.</p>
+    </div>
+    <a href="/" target="_blank" class="btn-primary-admin">Siteyi Görüntüle ↗</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Toplam Proje</div>
+        <div class="stat-value">@ViewBag.ProjectCount</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Etkinlik</div>
+        <div class="stat-value">@ViewBag.EventCount</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-label">Yetenek</div>
+        <div class="stat-value">@ViewBag.SkillCount</div>
+    </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
+        <h2 style="font-size:1rem;margin-bottom:16px">Hızlı Erişim</h2>
+        <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="/Admin/CreateProject" class="nav-item">+ Yeni Proje Ekle</a>
+            <a href="/Admin/CreateEvent" class="nav-item">+ Yeni Etkinlik Ekle</a>
+            <a href="/Admin/CreateSkill" class="nav-item">+ Yeni Yetenek Ekle</a>
+            <a href="/Admin/About" class="nav-item"> Hakkımda Düzenle</a>
+        </div>
+    </div>
+</div>

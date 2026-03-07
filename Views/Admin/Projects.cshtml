@@ -1,0 +1,68 @@
+@model List<PortfolioSite.Models.Project>
+@{
+    ViewData["Title"] = "Projeler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Projeler</h1>
+        <p class="page-subtitle">@Model.Count proje listeleniyor</p>
+    </div>
+    <a href="/Admin/CreateProject" class="btn-primary-admin">+ Yeni Proje</a>
+</div>
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Görsel</th>
+                <th>Başlık (TR)</th>
+                <th>Başlık (EN)</th>
+                <th>Tech Stack</th>
+                <th>Öne Çıkan</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model)
+            {
+                var techList = System.Text.Json.JsonSerializer.Deserialize<List<string>>(project.TechStack ?? "[]") ?? new();
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(project.ImagePath))
+                        {
+                            <img src="@project.ImagePath" alt="@project.TitleTR" />
+                        }
+                        else
+                        {
+                            <span style="color:var(--text-sec);font-size:0.78rem">Yok</span>
+                        }
+                    </td>
+                    <td>@project.TitleTR</td>
+                    <td>@project.TitleEN</td>
+                    <td style="font-size:0.78rem;color:var(--text-sec)">@string.Join(", ", techList)</td>
+                    <td>
+                        @if (project.IsFeatured)
+                        {
+                            <span style="color:var(--blue)">★ Evet</span>
+                        }
+                        else
+                        {
+                            <span style="color:var(--text-sec)">—</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="/Admin/EditProject/@project.Id" class="btn-edit">Düzenle</a>
+                            <form method="post" action="/Admin/DeleteProject" style="display:inline">
+                                <input type="hidden" name="id" value="@project.Id" />
+                                <button type="submit" class="btn-delete">Sil</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,62 @@
+@model PortfolioSite.Models.Skill
+@{
+    ViewData["Title"] = "Yetenek";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isEdit = Model.Id > 0;
+}
+
+<div class="page-header">
+    <div><h1 class="page-title">@(isEdit ? "Yetenek Düzenle" : "Yeni Yetenek")</h1></div>
+    <a href="/Admin/Skills" class="btn-cancel">← Geri</a>
+</div>
+
+<div class="form-card" style="max-width:480px">
+    <form method="post" action="@(isEdit ? "/Admin/EditSkill" : "/Admin/CreateSkill")">
+        @if (isEdit)
+        {
+            <input type="hidden" name="Id" value="@Model.Id" />
+        }
+
+        <div class="form-grid" style="grid-template-columns:1fr">
+            <div class="form-group">
+                <label class="form-label">Yetenek Adı</label>
+                <input type="text" name="Name" value="@Model.Name" class="form-input" required  />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kategori</label>
+                <select name="Category" class="form-select">
+                    @foreach (var cat in new[] { "Backend", "Frontend", "Database", "Tools", "Mobile", "Other", "Data Science", "AI" })
+                    {
+                        if (Model.Category == cat)
+                        {
+                            <option value="@cat" selected>@cat</option>
+                        }
+                        else
+                        {
+                            <option value="@cat">@cat</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Yeterlilik (@Model.Proficiency%)</label>
+                <div class="range-wrap">
+                    <input type="range" name="Proficiency" value="@Model.Proficiency" min="0" max="100" class="form-range" />
+                    <span class="range-val">@Model.Proficiency%</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Sıra No</label>
+                <input type="number" name="OrderIndex" value="@Model.OrderIndex" class="form-input" />
+            </div>
+        </div>
+
+        <div class="form-actions" style="margin-top:24px">
+            <button type="submit" class="btn-primary-admin">@(isEdit ? "Güncelle" : "Ekle")</button>
+            <a href="/Admin/Skills" class="btn-cancel">İptal</a>
+        </div>
+    </form>
+</div>

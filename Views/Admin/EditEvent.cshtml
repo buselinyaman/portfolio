@@ -1,0 +1,69 @@
+@model PortfolioSite.Models.SocialEvent
+@{
+    ViewData["Title"] = "Yeni Aktivite";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    bool isEdit = Model.Id > 0;
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">@(isEdit ? "Aktivite Düzenle" : "Yeni Aktivite")</h1>
+    </div>
+    <a href="/Admin/Events" class="btn-cancel">← Geri</a>
+</div>
+
+<div class="form-card">
+    <form method="post" action="@(isEdit ? "/Admin/EditEvent" : "/Admin/CreateEvent")" enctype="multipart/form-data">
+        @if (isEdit) { <input type="hidden" name="Id" value="@Model.Id" /> }
+        <div class="form-grid">
+            <div class="form-group">
+                <label class="form-label">Başlık (Türkçe)</label>
+                <input type="text" name="TitleTR" value="@Model.TitleTR" class="form-input" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Title (English)</label>
+                <input type="text" name="TitleEN" value="@Model.TitleEN" class="form-input" required />
+            </div>
+            <div class="form-group full">
+                <label class="form-label">Açıklama (Türkçe)</label>
+                <textarea name="DescriptionTR" class="form-textarea">@Model.DescriptionTR</textarea>
+            </div>
+            <div class="form-group full">
+                <label class="form-label">Description (English)</label>
+                <textarea name="DescriptionEN" class="form-textarea">@Model.DescriptionEN</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Aktivite Türü (TR)</label>
+                <input type="text" name="EventTypeTR" value="@Model.EventTypeTR" class="form-input"  />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Activity Type (EN)</label>
+                <input type="text" name="EventTypeEN" value="@Model.EventTypeEN" class="form-input"  />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Aktivite Tarihi</label>
+                <input type="date" name="EventDate" value="@Model.EventDate.ToString("yyyy-MM-dd")" class="form-input" required />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Konum</label>
+                <input type="text" name="Location" value="@Model.Location" class="form-input"  />
+            </div>
+            <div class="form-group full">
+                <label class="form-label">Aktivite Görseli</label>
+                <input type="file" name="imageFile" class="form-input" accept="image/*" />
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" class="image-preview" />
+                }
+                else
+                {
+                    <img src="" class="image-preview" style="display:none" />
+                }
+            </div>
+        </div>
+        <div class="form-actions" style="margin-top:24px">
+            <button type="submit" class="btn-primary-admin">@(isEdit ? "Güncelle" : "Ekle")</button>
+            <a href="/Admin/Events" class="btn-cancel">İptal</a>
+        </div>
+    </form>
+</div>

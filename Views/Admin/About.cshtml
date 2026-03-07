@@ -1,0 +1,79 @@
+@model PortfolioSite.Models.AboutInfo
+@{
+    ViewData["Title"] = "Hakkımda";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Hakkımda</h1>
+        <p class="page-subtitle">Profil ve iletişim bilgilerini düzenle</p>
+    </div>
+</div>
+
+<div class="form-card" style="max-width:900px">
+    <form method="post" action="/Admin/About" enctype="multipart/form-data">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <div class="form-grid">
+            <div class="form-group">
+                <label class="form-label">Ad Soyad (TR)</label>
+                <input type="text" name="FullNameTR" value="@Model.FullNameTR" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Full Name (EN)</label>
+                <input type="text" name="FullNameEN" value="@Model.FullNameEN" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Unvan (TR)</label>
+                <input type="text" name="TitleTR" value="@Model.TitleTR" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Title (EN)</label>
+                <input type="text" name="TitleEN" value="@Model.TitleEN" class="form-input" />
+            </div>
+            <div class="form-group full">
+                <label class="form-label">Biyografi (Türkçe)</label>
+                <textarea name="BiographyTR" class="form-textarea" style="min-height:120px">@Model.BiographyTR</textarea>
+            </div>
+            <div class="form-group full">
+                <label class="form-label">Biography (English)</label>
+                <textarea name="BiographyEN" class="form-textarea" style="min-height:120px">@Model.BiographyEN</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">E-posta</label>
+                <input type="email" name="Email" value="@Model.Email" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Telefon</label>
+                <input type="text" name="Phone" value="@Model.Phone" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">Konum</label>
+                <input type="text" name="Location" value="@Model.Location" class="form-input" placeholder="Sakarya, Türkiye" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">GitHub URL</label>
+                <input type="url" name="GithubUrl" value="@Model.GithubUrl" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label class="form-label">LinkedIn URL</label>
+                <input type="url" name="LinkedinUrl" value="@Model.LinkedinUrl" class="form-input" />
+            </div>
+            <div class="form-group full">
+                <label class="form-label">CV URL (Google Drive, vb.)</label>
+                <input type="url" name="CvUrl" value="@Model.CvUrl" class="form-input" placeholder="https://drive.google.com/..." />
+            </div>
+            <div class="form-group full">
+                <label class="form-label">Profil Fotoğrafı</label>
+                <input type="file" name="profileImage" class="form-input" accept="image/*" />
+                @if (!string.IsNullOrEmpty(Model.ProfileImagePath))
+                {
+                    <img src="@Model.ProfileImagePath" style="width:80px;height:80px;object-fit:cover;border-radius:50%;margin-top:8px" />
+                }
+            </div>
+        </div>
+        <div class="form-actions" style="margin-top:24px">
+            <button type="submit" class="btn-primary-admin">Kaydet</button>
+        </div>
+    </form>
+</div>

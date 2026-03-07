@@ -1,0 +1,47 @@
+@model List<PortfolioSite.Models.Skill>
+@{
+    ViewData["Title"] = "Yetenekler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Yetenekler</h1>
+        <p class="page-subtitle">@Model.Count Yetenekler Listeleniyor</p>
+    </div>
+    <a href="/Admin/CreateSkill" class="btn-primary-admin">+ Yeni Yetenek</a>
+</div>
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+    <table class="data-table">
+        <thead>
+            <tr><th>Yetenek</th><th>Kategori</th><th>Yeterlilik</th><th>İşlemler</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var skill in Model)
+            {
+                <tr>
+                    <td style="font-weight:600">@skill.Name</td>
+                    <td style="color:var(--blue);font-size:0.82rem">@skill.Category</td>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:12px">
+                            <div style="flex:1;height:4px;background:var(--border);border-radius:99px;max-width:120px">
+                                <div style="height:100%;width:@skill.Proficiency%;background:var(--blue);border-radius:99px"></div>
+                            </div>
+                            <span style="font-family:var(--ff-mono);font-size:0.78rem;color:var(--text-sec)">@skill.Proficiency%</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="/Admin/EditSkill/@skill.Id" class="btn-edit">Düzenle</a>
+                            <form method="post" action="/Admin/DeleteSkill" style="display:inline">
+                                <input type="hidden" name="id" value="@skill.Id" />
+                                <button type="submit" class="btn-delete">Sil</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

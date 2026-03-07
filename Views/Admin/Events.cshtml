@@ -1,0 +1,58 @@
+@model List<PortfolioSite.Models.SocialEvent>
+@{
+    ViewData["Title"] = "Aktiviteler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Aktiviteler</h1>
+        <p class="page-subtitle">@Model.Count etkinlik listeleniyor</p>
+    </div>
+    <a href="/Admin/CreateEvent" class="btn-primary-admin">+ Yeni Aktivite</a>
+</div>
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Görsel</th>
+                <th>Başlık (TR)</th>
+                <th>Tür</th>
+                <th>Tarih</th>
+                <th>Konum</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ev in Model)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(ev.ImagePath))
+                        {
+                            <img src="@ev.ImagePath" alt="@ev.TitleTR" />
+                        }
+                        else
+                        {
+                            <span style="color:var(--text-sec);font-size:0.78rem">Yok</span>
+                        }
+                    </td>
+                    <td>@ev.TitleTR</td>
+                    <td style="color:var(--blue);font-size:0.82rem">@ev.EventTypeTR</td>
+                    <td style="font-family:var(--ff-mono);font-size:0.82rem">@ev.EventDate.ToString("dd.MM.yyyy")</td>
+                    <td style="color:var(--text-sec);font-size:0.82rem">@ev.Location</td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="/Admin/EditEvent/@ev.Id" class="btn-edit">Düzenle</a>
+                            <form method="post" action="/Admin/DeleteEvent" style="display:inline">
+                                <input type="hidden" name="id" value="@ev.Id" />
+                                <button type="submit" class="btn-delete">Sil</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
